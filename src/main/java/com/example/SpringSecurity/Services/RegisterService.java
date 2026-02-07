@@ -16,18 +16,24 @@ public class RegisterService {
     private final SecurityConfig securityConfig;
 
     public RegisterResponseDto register(RegisterRequestDto requestDto){
-        UserEntity user = UserEntity.builder()
-                .email(requestDto.getEmail())
-                .password(securityConfig.passwordEncoder().encode(requestDto.getPassword()))
-                .role("USER")
-                .build();
+        try{
+            UserEntity user = UserEntity.builder()
+                    .email(requestDto.getEmail())
+                    .password(securityConfig.passwordEncoder().encode(requestDto.getPassword()))
+                    .role("USER")
+                    .build();
 
-        userRepository.save(user);
+            userRepository.save(user);
 
-        RegisterResponseDto responseDto = RegisterResponseDto.builder()
-                .email(user.getEmail())
-                .message("Registro exitoso")
-                .build();
-        return responseDto;
+            RegisterResponseDto responseDto = RegisterResponseDto.builder()
+                    .email(user.getEmail())
+                    .message("Registro exitoso")
+                    .build();
+            return responseDto;
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.print("Error en el registro");
+            return null;
+        }
     }
 }

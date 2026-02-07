@@ -25,4 +25,7 @@ public class UserEntity {
 
     @Column (name = "role")
     private String role;
+
+    @OneToOne(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private RefreshTokenEntity refreshToken;
 }
