@@ -44,9 +44,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable()) // Desactivamos CSRF porque JWT es stateless
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // Rutas públicas (Login/Registro)
+                        .requestMatchers("/api/product/**").authenticated()
                         .anyRequest().authenticated() // Todo lo demás requiere token
                 )
                 // 1. Decimos que no queremos sesiones de servidor (porque usamos JWT)

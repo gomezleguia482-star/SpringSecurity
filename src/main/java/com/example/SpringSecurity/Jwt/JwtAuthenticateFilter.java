@@ -42,7 +42,7 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
         }
 
         // Se corta solo el String para obtener solo el token
-        jwt = authHeader.substring(7);
+        jwt = authHeader.substring(7).trim();
 
         try{
 
